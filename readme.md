@@ -1,12 +1,12 @@
 # com-modbus
 this is a wrapper for npm's [modbus-serial](https://www.npmjs.com/package/modbus-serial) library that handle modbus serial communication. This wrapper handle on-fail-retry and automatic data chunking for large data. 
 
-Currently only tested on Linux (Debian-based).
+Currently only tested on Linux 🐧 (Debian-based).
 
-## Installation
+## 🧑‍🔧 Installation
 `npm i --save git://adrianaryaputra/com-modbus.git`
 
-## Usage
+## 📖 Usage
 ```js
 const { 
     ModbusHandler, 
