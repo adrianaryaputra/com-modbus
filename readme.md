@@ -1,5 +1,5 @@
 # com-modbus
-this is a wrapper for npm's [modbus-serial](https://www.npmjs.com/package/modbus-serial) library that handle modbus serial communication. This wrapper handle communication retry and data chunking for large data. 
+this is a wrapper for npm's [modbus-serial](https://www.npmjs.com/package/modbus-serial) library that handle modbus serial communication. This wrapper handle on-fail-retry and automatic data chunking for large data. 
 
 Currently only tested on Linux (Debian-based).
 
@@ -8,14 +8,17 @@ Currently only tested on Linux (Debian-based).
 
 ## Usage
 ```js
-const SerialPort = require('serialport');
-const { ModbusHandler, ModbusDevice } = require('com-modbus');
+const { 
+    ModbusHandler, 
+    ModbusDevice, 
+    SerialPort,
+} = require('com-modbus');
 
 
 // set serial port
 const port = new SerialPort('/dev/tty-usbserial1', {
   baudRate: 57600
-})
+});
 
 
 // set modbus handler and device
