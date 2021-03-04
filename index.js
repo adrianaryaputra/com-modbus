@@ -110,33 +110,33 @@ class ModbusHandler {
     _modbusSendCommand(command, args) {
 
         switch(command) {
-            case MODBUS_CMD.readCoils:
+            case ModbusCommand.readCoils:
                 args[2] = (args[2] > this.chunkSizeWord) ? this.chunkSizeWord : args[2];
                 this.connection.writeFC1(...args)
                 break;
-            case MODBUS_CMD.readDiscreteInputs:
+            case ModbusCommand.readDiscreteInputs:
                 args[2] = (args[2] > this.chunkSizeWord) ? this.chunkSizeWord : args[2];
                 this.connection.writeFC2(...args)
                 break;
-            case MODBUS_CMD.readHoldingRegisters:
+            case ModbusCommand.readHoldingRegisters:
                 args[2] = (args[2] > this.chunkSizeWord) ? this.chunkSizeWord : args[2];
                 this.connection.writeFC3(...args)
                 break;
-            case MODBUS_CMD.readInputRegisters:
+            case ModbusCommand.readInputRegisters:
                 args[2] = (args[2] > this.chunkSizeWord) ? this.chunkSizeWord : args[2];
                 this.connection.writeFC4(...args)
                 break;
-            case MODBUS_CMD.writeCoil:
+            case ModbusCommand.writeCoil:
                 this.connection.writeFC5(...args)
                 break;
-            case MODBUS_CMD.writeRegister:
+            case ModbusCommand.writeRegister:
                 this.connection.writeFC6(...args)
                 break;
-            case MODBUS_CMD.writeCoils:
+            case ModbusCommand.writeCoils:
                 args[2] = args[2].slice(0,4);
                 this.connection.writeFC15(...args)
                 break;
-            case MODBUS_CMD.writeRegisters:
+            case ModbusCommand.writeRegisters:
                 args[2] = args[2].slice(0,4);
                 this.connection.writeFC16(...args)
                 break;
@@ -161,10 +161,10 @@ class ModbusHandler {
 
         switch(modbusSendCommand) {
             // if modbus read command
-            case MODBUS_CMD.readCoils:
-            case MODBUS_CMD.readDiscreteInputs:
-            case MODBUS_CMD.readHoldingRegisters:
-            case MODBUS_CMD.readInputRegisters:
+            case ModbusCommand.readCoils:
+            case ModbusCommand.readDiscreteInputs:
+            case ModbusCommand.readHoldingRegisters:
+            case ModbusCommand.readInputRegisters:
                 if(vals > this.chunkSizeWord) {
                     // generate chunks callback function
                     let chunkFn = (error, success) => {
@@ -197,8 +197,8 @@ class ModbusHandler {
                 break;
 
             // if modbus write command
-            case MODBUS_CMD.writeCoils:
-            case MODBUS_CMD.writeRegisters:
+            case ModbusCommand.writeCoils:
+            case ModbusCommand.writeRegisters:
                 if(Array.isArray(vals)) {
                     if(vals.length > this.chunkSizeWord) {
                         // generate chunks callback function
