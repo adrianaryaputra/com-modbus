@@ -1,4 +1,5 @@
 const ModbusRTU = require("modbus-serial");
+const SerialPort = require("serialport");
 
 class ModbusHandler {
 
@@ -318,7 +319,7 @@ class ModbusDevice {
 
 
 
-let ModbusCommand = new Object({
+let ModbusCommand = Object.freeze({
     readCoils: 'FC1',
     readDiscreteInputs: 'FC2',
     readHoldingRegisters: 'FC3',
@@ -337,4 +338,8 @@ module.exports = {
     ModbusHandler,
     ModbusDevice,
     ModbusCommand,
+    SerialPort,
+    TcpPort: ModbusRTU.TcpPort,
+    TelnetPort: ModbusRTU.TelnetPort,
+    C701Port: ModbusRTU.C701Port,
 }
