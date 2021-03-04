@@ -23,6 +23,7 @@ let modbusHandler = new ModbusHandler({
     msgSendInterval: 100,
     timeout: 100,
     retryCount: 10,
+    chunkSizeWord: 4,
 });
 
 let modbusDevice = new ModbusDevice({
@@ -37,13 +38,11 @@ modbusHandler.setConnection(port).open();
 
 
 // send modbus (read / write)
-let regAddress = 30;
-let regLength = 2;
 modbusDevice.send({
-    modbusId: 1,
-    modbusSendCommand: modbusDevice.modbusCmd.readHoldingRegisters, 
-    modbusSendArgs: [regAddress, regLength],
-    modbusPriority: 2, // lower have higher priority
-    modbusCallback: (error, success) => {}
-})
+    modbusCmd: modbusDevice.modbusCmd.readHoldingRegisters, 
+    address: 30,
+    length: 2,
+    priority: 2, // lower have higher priority
+    callback: (error, success) => {}
+});
 ```
