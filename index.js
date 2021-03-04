@@ -9,7 +9,7 @@ class ModbusHandler {
         msgSendInterval = 200, 
         timeout = 500,
         retryCount = 3,
-        chunkSizeWord = 4,
+        chunkSizeWord = 4, // 4*16 bit
     }) {
         this.timeout = timeout;
         this.retryCount = retryCount-1;
@@ -134,11 +134,11 @@ class ModbusHandler {
                 this.connection.writeFC6(...args)
                 break;
             case ModbusCommand.writeCoils:
-                args[2] = args[2].slice(0,4);
+                args[2] = args[2].slice(0, this.chunkSizeWord);
                 this.connection.writeFC15(...args)
                 break;
             case ModbusCommand.writeRegisters:
-                args[2] = args[2].slice(0,4);
+                args[2] = args[2].slice(0, this.chunkSizeWord);
                 this.connection.writeFC16(...args)
                 break;
         }
@@ -210,7 +210,7 @@ class ModbusHandler {
                                 this.send({
                                     modbusId,
                                     modbusSendCommand,
-                                    modbusSendArgs: [address+this.chunkSizeWord, vals.slice(4)],
+                                    modbusSendArgs: [address+this.chunkSizeWord, vals.slice(this.chunkSizeWord)],
                                     modbusPriority,
                                     modbusCallback,
                                     _chunkBuffer: _chunkBuffer,
@@ -247,7 +247,7 @@ class ModbusHandler {
                     _chunkBuffer.push(success);
                     // flatten the chunkBuffer
                     success = _chunkBuffer.reduce((reducer, value) => { 
-                        if(value.data) return reducer.concat(value.data.slice(0, 4));
+                        if(value.data) return reducer.concat(value.data.slice(0, this.chunkSizeWord));
                         if(value.value !== undefined) return reducer.concat(value.value);
                         if(value.state !== undefined) return reducer.push(value.state);
                     }, []);
